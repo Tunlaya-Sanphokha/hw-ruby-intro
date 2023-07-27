@@ -43,6 +43,7 @@ def sum_to_n?(arr, n)
   return result
 end
 
+#------------------------------------------------------------------
 # Part 2
 
 def hello(name)
@@ -51,15 +52,61 @@ def hello(name)
 end
 
 def starts_with_consonant? s
-  # YOUR CODE HERE
+  /^[^aeiou\W]/i.match(s) != nil
 end
 
-def binary_multiple_of_4? s
-  # YOUR CODE HERE
+
+def binary_multiple_of_4?(s)
+  #Regular expression to check if the string is a valid binary number (contain only 0s and 1s)
+  valid_binary_regex = /^[01]+$/
+
+  #Regular expression to check if the binary number is a multiple of 4 (ends with "00")
+  binary_multiple_of_4_regex = /^(?:[01]*00|0)$/
+
+  #Check if the string matches the valid binary regex and is a multiple pf 4
+  return !!(s =~ valid_binary_regex) && !!(s =~ binary_multiple_of_4_regex)
 end
+
+#--------------------------------------------------------
 
 # Part 3
 
 class BookInStock
-# YOUR CODE HERE
+  # YOUR CODE HERE
+  attr_accessor :isbn
+    attr_accessor :price
+
+
+    def initialize(isbn, price)
+      if valid_isbn?(isbn)
+        @isbn = isbn
+      else
+        raise ArgumentError, "Invalid ISBN number: #{isbn}"
+      end
+      if valid_price?(price)
+        @price = price
+      else
+        raise ArgumentError, "Invalid price: #{price}"
+      end
+    end
+
+
+    def price_as_string
+      "$#{'%.2f' % @price}"
+    end
+
+
+    private
+
+
+    def valid_isbn?(isbn)
+      !isbn.nil? && !isbn.empty?
+    end
+
+
+    def valid_price?(price)
+      price.is_a?(Numeric) && price > 0
+    end
+
+  
 end
